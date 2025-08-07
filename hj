@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Feliz 2 Meses 💕</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      overflow-y: scroll;
+    }
+    header {
+      background-color: #cf0101;
+      color: rgb(255, 255, 255);
+      padding: 30px 20px;
+      width: 100%;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+      animation: pulse 2s infinite;
+    }
+    #toggleGalleryBtn {
+      margin: 20px auto;
+      padding: 12px 25px;
+      font-size: 1.1em;
+      cursor: pointer;
+      background-color: #cf0000;
+      border: none;
+      border-radius: 10px;
+      color: rgb(255, 255, 255);
+      transition: background-color 0.3s ease;
+      display: inline-block;
+      width: 200px;
+      box-sizing: border-box;
+      animation: pulse 3s infinite;
+    }
+    #toggleGalleryBtn:hover { background-color: #e80000; }
+    .gallery {
+      margin: 30px auto;
+      display: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 0 20px;
+      max-width: 960px;
+      position: relative;
+    }
+    .gallery img {
+      width: 300px;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgb(255, 255, 255);
+      transition: transform 0.3s ease;
+      display: none;
+    }
+    .gallery img:hover { transform: scale(1.05); }
+    .message {
+      margin: 40px auto;
+      max-width: 700px;
+      background-color: #f03434;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgb(131, 131, 131);
+      text-align: left;
+    }
+    :root { --barra-cor: #ff4d6d; }
+    .barra-container {
+      width: 300px;
+      height: 25px;
+      background-color: #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 20px;
+      position: relative;
+      display: inline-block;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    .barra {
+      height: 100%;
+      width: 10%;
+      background-color: var(--barra-cor);
+      transition: width 0.3s ease;
+      border-radius: 12px 0 0 12px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .pergunta {
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+    .botoes {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    button {
+      font-size: 1.5rem;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--barra-cor);
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s ease;
+    }
+    button:hover { background-color: #e84363; }
+    button:active { background-color: #c83654; }
+    .porcentagem {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .timeline {
+      background-color: #f03434;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 40px auto;
+      max-width: 700px;
+      color: white;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+      text-align: left;
+    }
+    .timeline h2 {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .timeline ul {
+      list-style: none;
+      padding: 0;
+    }
+    .timeline li { margin-bottom: 10px; }
+    .contador {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #f03434;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 10px;
+      border-radius: 10px;
+    }
+    /* Presente interativo */
+    .present-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin: 30px 0;
+      user-select: none;
+    }
+    .present-label {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: .2px;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,.5);
+    }
+    .present-btn {
+      font-size: 56px;
+      width: 96px;
+      height: 96px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,.35);
+      cursor: pointer;
+      transform-origin: center;
+      animation: pulsePresent 1.2s infinite;
+      position: relative;
+    }
+    @keyframes pulsePresent {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+    .congrats {
+      position: fixed;
+      left: 50%;
+      top: 20%;
+      transform: translateX(-50%) translateY(-10px);
+      background: linear-gradient(90deg,#fff,#ffeeca);
+      color: #222;
+      padding: 18px 26px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      font-weight: 700;
+      font-size: 20px;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s ease, transform .45s cubic-bezier(.2,.9,.2,1);
+    }
+    .congrats.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .particle {
+      position: fixed;
+      font-size: 20px;
+      pointer-events: none;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      will-change: transform, opacity;
+      animation: fly-away 900ms forwards ease-out;
+      z-index: 9998;
+    }
+    @keyframes fly-away {
+      0% { transform: translate(-50%, -50%) translateY(0) scale(1); opacity: 1; }
+      100% { transform: translate(-50%, -50%) translateY(-160px) translateX(120px) rotate(360deg) scale(.6); opacity: 0; }
+    }
+    #starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at center, #000010 0%, #000000 70%);
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* Estrelas */
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.8;
+  animation: twinkle 3s infinite alternate;
+}
+
+/* Animação de brilho */
+@keyframes twinkle {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.8; }
+}
+
+.exploding-heart {
+  position: fixed;
+  pointer-events: none;
+  font-size: 24px;
+  animation: explodeHeart 800ms forwards ease-out;
+  user-select: none;
+  z-index: 9999;
+}
+
+@keyframes explodeHeart {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2) translateY(-100px);
+  }
+}
+
+/* Estilos para o modal de zoom */
+#zoomModal {
+  display: none; /* escondido por padrão */
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#zoomModal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #ff4d6d;
+  transition: transform 0.3s ease;
+  cursor: default;
+}
+
+#heartCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  background: transparent;
+}
+
+.follow-heart {
+  position: fixed;
+  pointer-events: none;
+  font-size: 20px;
+  color: #ff4d6d;
+  user-select: none;
+  animation: floatUp 1s forwards ease-out;
+  z-index: 10000;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) scale(1.5);
+  }
+}
+
+  </style>
+</head>
+<body>
+  <canvas id="heartCanvas"></canvas>
+
+  <div id="starfield"></div>
+
+  <div class="contador" id="contador">00m 00d 00h 00m 00s</div>
+  <header>
+    <h1>Feliz 2 Meses de Namoro 💖</h1>
+    <p>Eu te amo mais a cada dia, meu mozão!</p>
+  </header>
+  <button id="toggleGalleryBtn">Mostrar Fotos</button>
+  <section class="gallery" id="gallery">
+    <img src="b6b6df81-f641-4b55-8f55-a27e1c4f8069.jpeg" alt="I" />
+    <img src="img 2.jpeg" alt="Love" />
+    <img src="img.jpeg" alt="You" />
+    <img src="festa.jpeg" alt="You" />
+    <img src="shoping.jpeg" alt="You" />
+    <img src="tinta.jpeg" alt="You" />
+    <img src="branco.jpeg" alt="You" />
+    <img src="niver.jpeg" alt="You" />
+    <img src="girasol.jpeg" alt="You" />
+  </section>
+  <section class="message">
+    <h2>Para o amor da minha vida 💌</h2>
+    <p>
+      Hoje completamos 2 meses de uma história linda que está só começando. <br />
+      Cada dia ao seu lado é um presente, cada sorriso seu ilumina meu mundo o meu dia<br /><br />
+      Obrigado por ser tão especial, por me fazer sentir amado de verdade.<br />
+      Que venham muitos meses, anos e momentos juntos. Eu te amo, minha princesa! ❤️
+    </p>
+  </section>
+  <section class="message">
+    <p>
+      Amo você, desejo para nós dois toda a felicidade do mundo. Que venham muitos e muitos meses, anos, décadas, séculos! kkkkkkk<br />
+      fiz essa carta digital espero que goste 
+    </p>
+  </section>
+  <section class="timeline">
+    <h2>🌟 Nossa Linha do Tempo 🌟</h2>
+    <ul>
+      <li>❤️ 25/09/24 - primeira vez que saimos juntos</li>
+      <li>❤️ 15/11/24 - Nosso primeiro beijo</li>
+      <li>❤️ 20/11/24 - nossa primeira praia juntos</li>
+      <li>❤️ 27/11/24 - primeiro presente que eu ganhei</li>
+      <li>❤️ 21/12/24 - seu primeiro buque de flores</li>
+      <li>❤️ 01/01/25 - começamos a ficar</li>
+      <li>❤️ 07/06/25 - pedido de namoro</li>
+      <li>❤️ 07/08/25 - 2 meses de namoro</li>
+    </ul>
+  </section>
+  <section class="message">
+    <div class="barra-container">
+      <div class="barra" id="barra"></div>
+    </div>
+    <div class="pergunta">Quantos % você me ama?</div>
+    <div class="botoes">
+      <button id="menos" disabled>-</button>
+      <button id="mais">+</button>
+    </div>
+    <div class="porcentagem" id="porcentagem">10%</div>
+  </section>
+
+  <!-- Presente Interativo -->
+  <div class="present-wrap">
+    <div class="present-label">clique aqui</div>
+    <div class="present-btn" id="presentBtn">🎁</div>
+  </div>
+  <div class="congrats" id="congratsMsg">
+    parabens voce ganhou um pix de 5 mil e muitos bjs ❤️
+  </div>
+
+  <footer style="background-color: #f03434; color: rgb(255, 255, 255); padding: 15px; font-size: 0.9em;">
+    Feito com amor pelo seu amado batista – 07/08/2025
+  </footer>
+
+  <script>
+    const btn = document.getElementById('toggleGalleryBtn');
+    const gallery = document.getElementById('gallery');
+    const fotos = gallery.getElementsByTagName('img');
+    let isVisible = false;
+    let fotoAtual = 0;
+
+    btn.addEventListener('click', () => {
+      isVisible = !isVisible;
+      if (isVisible) {
+        gallery.style.display = 'flex';
+        btn.textContent = 'Esconder Fotos';
+      } else {
+        gallery.style.display = 'none';
+        btn.textContent = 'Mostrar Fotos';
+      }
+    });
+
+    setInterval(() => {
+      if (isVisible) {
+        for (let i = 0; i < fotos.length; i++) {
+          fotos[i].style.display = 'none';
+        }
+        fotos[fotoAtual].style.display = 'block';
+        fotoAtual = (fotoAtual + 1) % fotos.length;
+      }
+    }, 2500);
+
+    const barra = document.getElementById('barra');
+    const btnMais = document.getElementById('mais');
+    const btnMenos = document.getElementById('menos');
+    const porcentagemDisplay = document.getElementById('porcentagem');
+    let porcentagem = 10;
+
+    function atualizarBarra() {
+      barra.style.width = porcentagem + '%';
+      porcentagemDisplay.textContent = porcentagem + '%';
+    }
+    btnMais.addEventListener('click', () => {
+      if (porcentagem < 1000) {
+        porcentagem += 10;
+        atualizarBarra();
+      }
+    });
+    btnMenos.addEventListener('click', () => {
+      if (porcentagem > 10) {
+        porcentagem -= 10;
+        atualizarBarra();
+      }
+    });
+    atualizarBarra();
+
+    const startDate = new Date('2025-06-07T00:00:00');
+    const contador = document.getElementById('contador');
+    function atualizarContador() {
+      const now = new Date();
+      const diff = now - startDate;
+      const segundos = Math.floor(diff / 1000) % 60;
+      const minutos = Math.floor(diff / 60000) % 60;
+      const horas = Math.floor(diff / 3600000) % 24;
+      const dias = Math.floor(diff / 86400000) % 365;
+      const meses = Math.floor(dias / 30);
+      contador.textContent = `${meses}m ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+    }
+    setInterval(atualizarContador, 1000);
+
+    // Presente interativo
+    const presentBtn = document.getElementById('presentBtn');
+    const congratsMsg = document.getElementById('congratsMsg');
+    function createParticle(x, y) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      particle.style.left = `${x}px`;
+      particle.style.top = `${y}px`;
+      particle.textContent = ['💖', '✨', '❤️', '💝'][Math.floor(Math.random()*4)];
+      document.body.appendChild(particle);
+      setTimeout(() => particle.remove(), 900);
+    }
+    presentBtn.addEventListener('click', () => {
+      const rect = presentBtn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => createParticle(x, y), i * 30);
+      }
+      congratsMsg.classList.add('show');
+      setTimeout(() => congratsMsg.classList.remove('show'), 3000);
+    });
+  </script>
+  <section id="quiz" style="background-color:#f03434; max-width:700px; margin:40px auto; padding:25px 30px; border-radius:15px; box-shadow: 0 4px 10px rgb(131,131,131); color: white; text-align:left;">
+  <h2 style="text-align:center; margin-bottom:20px;">Quiz: O quanto você me conhece? 💖</h2>
+
+  <div class="question" style="margin-bottom:15px; font-weight:600;">1. qual foi nosso primeiro filme juntos?</div>
+  <div class="options" style="margin-bottom:20px;">
+    <label style="display:block; cursor:pointer; padding:6px 10px; border-radius:8px;">
+      <input type="radio" name="q1" value="0" /> stitch
+    </label>
+    <label style="display:block; cursor:pointer; padding:6px 10px; border-radius:8px;">
+      <input type="radio" name="q1" value="1" /> deadpool e volverine
+    </label>
+    <label style="display:block; cursor:pointer; padding:6px 10px; border-radius:8px;">
+      <input type="radio" name="q1" value="0" /> transformrers 
+    </label>
+  </div>
+
+  <div class="question" style="margin-bottom:15px; font-weight:600;">2. Qual o meu lanche favorito?</div>
+  <div class="options" style="margin-bottom:20px;">
+    <label style="display:block; cursor:pointer; padding:6px 10px; border-radius:8px;">
+      <input type="radio" name="q2" value="1" /> caldo de cana com pastel
+    </label>
+    <label style="display:block; cursor:pointer; padding:6px 10px; border-radius:8px;">
+      <input type="radio" name="q2" value="1" /> japa
+    </label>
+    <label style="display:block; cursor:pointer; padding:6px 10px; border-radius:8px;">
+      <input type="radio" name="q2" value="0" /> pizza 
+    </label>
+  </div>
+
+  <div class="question" style="margin-bottom:15px; font-weight:600;">3. qual meu desenho/filme favorito?</div>
+  <div class="options" style="margin-bottom:20px;">
+    <label style="display:block; cursor:pointer; padding:6px 10px; border-radius:8px;">
+      <input type="radio" name="q3" value="1" /> Carro 1 3 
+    </label>
+    <label style="display:block; cursor:pointer; padding:6px 10px; border-radius:8px;">
+      <input type="radio" name="q3" value="1" /> Ben10
+    </label>
+    <label style="display:block; cursor:pointer; padding:6px 10px; border-radius:8px;">
+      <input type="radio" name="q3" value="0" /> backyardigans
+    </label>
+  </div>
+
+  <button id="submitQuiz" style="background-color:#cf0101; color:white; padding:10px 18px; border:none; border-radius:12px; cursor:pointer; font-size:1.1em; display:block; margin:0 auto; transition:background-color 0.3s;">
+    Enviar Respostas
+  </button>
+  <div id="quizResult" style="margin-top:20px; font-size:1.2em; font-weight:bold; text-align:center;"></div>
+</section>
+
+<script>
+  document.getElementById('submitQuiz').addEventListener('click', () => {
+    let score = 0;
+    const totalQuestions = 3;
+    for (let i = 1; i <= totalQuestions; i++) {
+      const options = document.getElementsByName('q' + i);
+      for (const option of options) {
+        if (option.checked && option.value === "1") {
+          score++;
+        }
+      }
+    }
+    const quizResult = document.getElementById('quizResult');
+    quizResult.textContent = `Você acertou ${score} de ${totalQuestions} perguntas!`;
+  });
+
+  const starfield = document.getElementById('starfield');
+
+function criarEstrela() {
+  const star = document.createElement('div');
+  star.classList.add('star');
+
+  // Tamanho aleatório entre 1px e 3px
+  const size = Math.random() * 2 + 1;
+  star.style.width = size + 'px';
+  star.style.height = size + 'px';
+
+  // Posição aleatória na tela
+  star.style.top = Math.random() * 100 + 'vh';
+  star.style.left = Math.random() * 100 + 'vw';
+
+  // Animação com delay aleatório para efeito mais natural
+  star.style.animationDelay = (Math.random() * 3) + 's';
+
+  starfield.appendChild(star);
+}
+
+// Criar 100 estrelas para o fundo
+for(let i = 0; i < 100; i++) {
+  criarEstrela();
+}
+
+document.addEventListener('click', (e) => {
+  const heart = document.createElement('div');
+  heart.textContent = '❤️';
+  heart.classList.add('exploding-heart');
+  heart.style.left = e.clientX + 'px';
+  heart.style.top = e.clientY + 'px';
+  document.body.appendChild(heart);
+  
+  setTimeout(() => {
+    heart.remove();
+  }, 800);
+});
+
+const zoomModal = document.getElementById('zoomModal');
+const zoomImg = document.getElementById('zoomImg');
+
+// Pega todas as imagens da galeria
+const galleryImgs = document.querySelectorAll('.gallery img');
+
+galleryImgs.forEach(img => {
+  img.style.cursor = 'pointer'; // muda o cursor para indicar clicável
+  img.addEventListener('click', () => {
+    zoomImg.src = img.src;
+    zoomModal.style.display = 'flex';
+  });
+});
+
+// Fecha o modal ao clicar fora da imagem
+zoomModal.addEventListener('click', (e) => {
+  if(e.target !== zoomImg) {
+    zoomModal.style.display = 'none';
+    zoomImg.src = '';
+  }
+});
+
+const canvas = document.getElementById('heartCanvas');
+const ctx = canvas.getContext('2d');
+let width, height;
+let hearts = [];
+
+function resize() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+}
+
+window.addEventListener('resize', resize);
+resize();
+
+class Heart {
+  constructor() {
+    this.x = Math.random() * width;
+    this.y = Math.random() * height - height;
+    this.size = Math.random() * 20 + 10;
+    this.speedY = Math.random() * 1 + 0.5;
+    this.opacity = Math.random() * 0.5 + 0.5;
+    this.angle = Math.random() * Math.PI * 2;
+    this.spin = (Math.random() - 0.5) * 0.02;
+  }
+
+  draw() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    ctx.globalAlpha = this.opacity;
+
+    ctx.fillStyle = 'red';
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(0, -this.size / 2, -this.size / 2, -this.size / 2, -this.size / 2, 0);
+    ctx.bezierCurveTo(-this.size / 2, this.size / 2, 0, this.size / 1.5, 0, this.size);
+    ctx.bezierCurveTo(0, this.size / 1.5, this.size / 2, this.size / 2, this.size / 2, 0);
+    ctx.bezierCurveTo(this.size / 2, -this.size / 2, 0, -this.size / 2, 0, 0);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  update() {
+    this.y += this.speedY;
+    this.angle += this.spin;
+
+    if(this.y > height + this.size) {
+      this.x = Math.random() * width;
+      this.y = -this.size;
+      this.opacity = Math.random() * 0.5 + 0.5;
+      this.speedY = Math.random() * 1 + 0.5;
+      this.size = Math.random() * 20 + 10;
+      this.spin = (Math.random() - 0.5) * 0.02;
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, width, height);
+  hearts.forEach(heart => {
+    heart.update();
+    heart.draw();
+  });
+  requestAnimationFrame(animate);
+}
+
+for(let i = 0; i < 50; i++) {
+  hearts.push(new Heart());
+}
+
+animate();
+
+document.addEventListener('mousemove', e => {
+  const heart = document.createElement('div');
+  heart.textContent = '❤️';
+  heart.className = 'follow-heart';
+  heart.style.left = e.clientX + 'px';
+  heart.style.top = e.clientY + 'px';
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 1000); // some depois de 1 segundo
+});
+
+</script>
+
+<div id="zoomModal">
+  <img src="" alt="Zoom" id="zoomImg" />
+</div>
+
+</body>
+</html>
